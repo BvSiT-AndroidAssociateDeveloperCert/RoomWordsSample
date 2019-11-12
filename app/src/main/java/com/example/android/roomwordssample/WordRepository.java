@@ -18,6 +18,7 @@ package com.example.android.roomwordssample;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -47,6 +48,11 @@ public class WordRepository {
     LiveData<List<Word>> getAllWords() {
         return mAllWords;
     }
+
+    DataSource.Factory<Integer, Word> getDataSourceFactoryAllWords(){
+        return mWordDao.getDataSourceFactoryAllWords();
+    }
+
 
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main

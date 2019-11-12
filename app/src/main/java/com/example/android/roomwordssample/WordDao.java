@@ -17,6 +17,7 @@ package com.example.android.roomwordssample;
  */
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -42,6 +43,9 @@ public interface WordDao {
     // we are notified whenever any of the database contents have changed.
     @Query("SELECT * from word_table ORDER BY word ASC")
     LiveData<List<Word>> getAlphabetizedWords();
+
+    @Query("SELECT * from word_table ORDER BY word ASC")
+    DataSource.Factory<Integer, Word> getDataSourceFactoryAllWords();
 
     @Insert (onConflict = OnConflictStrategy.IGNORE)
     void insert(Word word);

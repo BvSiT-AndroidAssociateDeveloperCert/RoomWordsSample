@@ -18,6 +18,7 @@ package com.example.android.roomwordssample;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -59,13 +60,21 @@ public class MainActivity extends AppCompatActivity {
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
-        mWordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+
+        mWordViewModel.pagedListLiveData.observe(this,adapter::submitList);
+
+        //Alternative syntax no. 1:
+        /*
+        mWordViewModel.pagedListLiveData.observe(this, new Observer<PagedList<Word>>() {
             @Override
-            public void onChanged(@Nullable final List<Word> words) {
-                // Update the cached copy of the words in the adapter.
-                adapter.setWords(words);
+            public void onChanged(@Nullable PagedList<Word> words) {
+                adapter.submitList(words);
             }
         });
+        */
+
+        //Alternative syntax no. 2:
+        //mWordViewModel.pagedListLiveData.observe(this,words -> adapter.submitList(words));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

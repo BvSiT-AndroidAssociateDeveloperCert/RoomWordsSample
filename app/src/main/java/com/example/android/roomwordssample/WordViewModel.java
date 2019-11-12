@@ -19,6 +19,8 @@ package com.example.android.roomwordssample;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 
 import java.util.List;
 
@@ -36,10 +38,13 @@ public class WordViewModel extends AndroidViewModel {
     // - Repository is completely separated from the UI through the ViewModel.
     private LiveData<List<Word>> mAllWords;
 
+    public LiveData<PagedList<Word>> pagedListLiveData;
+
     public WordViewModel (Application application) {
         super(application);
         mRepository = new WordRepository(application);
         mAllWords = mRepository.getAllWords();
+        pagedListLiveData = new LivePagedListBuilder<>(mRepository.getDataSourceFactoryAllWords(),50).build();
     }
 
     LiveData<List<Word>> getAllWords() { return mAllWords; }
