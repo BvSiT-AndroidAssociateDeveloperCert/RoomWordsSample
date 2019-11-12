@@ -1,0 +1,100 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.example.android.roomwordssample"
+        minSdkVersion 20
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        versionName "1.0"
+        //BvS:BEGIN
+        //See also https://stackoverflow.com/questions/52717048/didnt-find-class-android-support-test-runner-androidjunitrunner
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //BvS:END
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+	//BvS Java compile
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    def lifecycle_version = "1.1.1"
+    def room_version = "1.1.1"
+    def paging_version = "1.0.1"
+    def support_version = "28.0.0"
+    def constraint_version = "1.1.3"
+    def junit_version = "4.12"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_version"
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:preference-v14:$support_version"
+    implementation "com.android.support:support-emoji:$support_version"
+    implementation "com.android.support:support-emoji-appcompat:$support_version"
+    implementation "com.android.support:support-emoji-bundled:$support_version"
+
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    implementation "android.arch.persistence.room:common:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+
+    implementation "android.arch.paging:runtime:$paging_version"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+    testImplementation "android.arch.paging:common:$paging_version"
+
+    /* androidx */
+    //androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'  //BvS Needed for ApplicationProvider
+
+
+    /* pre-androidx gives error How to get Application?? */
+    //androidTestImplementation 'android.support.test:runner:1.0.0'
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //androidTestImplementation 'androidx.test:core:1.2.0'  //BvS Needed for ApplicationProvider
+    //androidTestImplementation 'com.android.support.test:runner:1.0.2'
+}
+
+/*
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // Dependencies for working with Architecture components
+    // You'll probably have to update the version numbers in guild.gradle (Project)
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+}
+*/
