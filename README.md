@@ -1,3 +1,8 @@
+================
+BvS: Upgraded gradle settings 3.5.1 5.4.1 SDK 28
+Added a solution to convert a  RecyclerView.Adapter to PagedListAdapter
+
+================
 RoomWordsSample
 ================
 
